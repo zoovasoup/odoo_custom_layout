@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- New report layout for din5008 format -->
+        <template id="external_layout_custom">
+
+            <div class="">
+
+                <!-- Header -->
+                <div t-attf-class="header custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div class="row company_header" t-att-style="'height: %dmm;' % (din_header_spacing or 45)">
+                        <div t-attf-class="#{'col-6' if company.logo != false else 'col-12'} #{'text-left' if company.logo != false else 'text-center'} mt0">
+                            <h3 t-field="company.report_header"/>
+                        </div>
+                        <div t-if="company.logo" class="col-6">
+                            <img 
+                                t-if="company.logo" 
+                                t-att-src="image_data_uri(company.logo)" 
+                                t-att-style="'max-height: %dmm;' % (din_header_spacing or 45)" 
+                                class="text-col-right" 
+                                alt="Logo"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Address and Invoice Details -->
+                <div 
+                    t-attf-class="invoice_note custom_page article container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}" 
+                    t-att-data-oe-model="o and o._name"
+                    t-att-data-oe-id="o and o.id"
+                    t-att-data-oe-lang="o and o.env.context.get('lang')"
+                >
+                    <div class="row">
+                        <div class="col" name="company_address">
+                            <div class="company_address">
+                                <span t-if="company.company_details" t-field="company.company_details"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Invoice Address -->
+                        <div class="col-5">
+                            <div class="address">
+                                <div t-if="address">
+                                    <t t-out="address"/>
+                                </div>
+                            </div>                        
+                        </div>
+
+                        <!-- Invoice Details -->
+                        <div class="col-7">
+                            <div class="information_block">
+
+                                <div class="container">
+                                    <t t-foreach="template_data" t-as="row">
+                                        <div class="row">
+                                            <div class="col-6"><t t-esc="row[0]"/>:</div><div class="col-6"><t t-esc="row[1]"/></div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o and 'partner_id' in o">
+                                        <div t-if="o.partner_id.vat" class="row">
+                                            <div class="col-6">
+                                                <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-esc="o.company_id.account_fiscal_country_id.vat_label"/>
+                                                <t t-else="">Tax ID</t>: 
+                                            </div>
+                                            <div class="col-6"><t t-esc="o.partner_id.vat"/></div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                    
+
+                    <!-- Document Title -->
+                    <h2>
+
+                    </h2>
+                    
+                    <!-- Document Content -->
+                    <div class="row">
+                        <div class="col">
+                            <t t-out="0"/>
+                        </div>
+                    </div>                        
+
+                </div>
+
+                <!-- Footer -->
+                <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div t-if="report_type == 'pdf'" class="row">
+                        <div class="col text-end page_number">
+                            <div class="text-muted">
+                                Page: <span class="page"/> of <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mt-2" style="height: 10px;">
+                            <div style="width: 100%; border-top: solid 1px"></div>
+                        </div>
+                    </div>
+
+                    <div class="row company_details">
+                        <div class="col-4">
+                            <ul class="list-inline">
+                                <li><span t-field="company.name"/></li>
+
+                                <li t-if="company.country_id"><span t-field="company.country_id.name"/></li>
+                            </ul>
+                        </div>
+                        <div class="col-4">
+                            <ul class="list-inline">
+                                <li t-if="company.phone"><span class="fa fa-fw fa-phone"/><span t-field="company.phone"/></li>
+                                <li t-if="company.email"><span class="fa fa-fw fa-envelope-o"/><span t-field="company.email"/></li>
+                                <li t-if="company.website"><span class="fa fa-fw fa-globe"/><span t-field="company.website"/></li>
+                                <li t-if="company.vat"><t t-esc="company.account_fiscal_country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-4">
+                            <ul class="list-inline" t-if="company.partner_id.bank_ids">
+                                <t t-foreach="company.partner_id.bank_ids[:2]" t-as="bank">
+                                    <li><span t-field="bank.bank_id.name"/></li>
+                                    <li>IBAN: <span t-field="bank.acc_number"/></li>
+                                    <li>BIC: <span t-field="bank.bank_id.bic"/></li>
+                                </t>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </template>
+
+        <template id="layout_custom_css" inherit_id="web.styles_company_report">
+            <xpath expr="//t[@t-elif]" position="before">
+                <t t-elif="layout == 'base_document.external_layout_custom'">
+                    &amp;.custom_page {
+                        &amp;.header {
+                            .company_header {
+                                .name_container {
+                                    color: <t t-esc='primary'/>;
+                                }
+                            }
+                        }
+                        &amp;.invoice_note {
+                            div {
+                                .address {
+                                    > span {
+                                        color: <t t-esc='secondary'/>;
+                                    }
+                                }
+                            }
+                            h2 {
+                                color: <t t-esc='primary'/>;
+                            }
+                            .page {
+                                [name=invoice_line_table], [name=stock_move_table], .o_main_table {
+                                    th {
+                                        color: <t t-esc='secondary'/>;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
