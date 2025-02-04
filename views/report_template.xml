@@ -84,8 +84,16 @@
                         <div class="col">
                             <t t-out="0"/>
                         </div>
-                    </div>                        
+                    </div> 
 
+                    <!-- document signatue -->
+                    <div class="row mt-5" style="margin-top: 50px;">
+                        <div class="col-6 text-left">
+                            <hr style="width: 70%;"/>
+                            <p>Signature</p>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <!-- Footer -->
