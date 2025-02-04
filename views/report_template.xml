@@ -66,18 +66,18 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="date text-end">
                                 <t t-if="o.date_order">
                                     <t t-esc="o.date_order.strftime('%d %B %Y')"/>
                                 </t>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                                         
                     <!-- Document Content -->
-                    <div class="row">
+                    <div class="row o_report_layout_boxed">
                         <div class="col">
                             <t t-out="0"/>
                         </div>
@@ -166,6 +166,44 @@
                                 }
                             }
                         }
+                &amp;.o_report_layout_boxed {
+                    #total strong {
+                        color: <t t-esc='primary'/>;
+                    }
+                    .totals_taxes_company_currency strong{
+                        color: <t t-esc='primary'/>;
+                    }
+                    #informations strong {
+                        color: <t t-esc='secondary'/>;
+                    }
+                    h2 span {
+                        color: <t t-esc='primary'/>;
+                    }
+                    table {
+                        thead {
+                            tr th {
+                                color: <t t-esc='secondary'/>;
+                            }
+                        }
+                        tbody tr td {
+                            &amp;.o_line_section td {
+                                    background-color: rgba(<t t-esc='primary'/>, 0.7);
+                                }
+                            &amp;.is-subtotal,
+                                td.o_price_total {
+                                    background-color: rgba(<t t-esc='secondary'/>, 0.1);
+                                }
+                        }
+                    }
+                }
+                .row > div > table,
+                div#total table, .totals_taxes_company_currency table {
+                    tr {
+                        &amp;.o_total td {
+                            background-color: rgba(<t t-esc='primary'/>, 0.9);
+                        }
+                    }
+                }
                     }
                 </t>
             </xpath>
