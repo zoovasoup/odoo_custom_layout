@@ -78,18 +78,20 @@
                         </div>
                     </div> 
 
-                    <div id="custom_signature">
-                        <div class="row border border-dark" style="height: 150px;">
-                            <div class="col-3 text-center">
-                                <span>test</span>
+                    <div id="custom_signature" class="mt-5">
+                        <div class="row fw-bold text-start"><span t-esc="company.name" /></div>
+                        <div class="row h-150">
+                            <div class="col-5 text-start">
+                                <div class="row" style="height: 110px;"></div>
+                                <span class="fw-bold text-decoration-underline" t-esc="company.name"></span><br></br>
+                                <span class="">test</span>
                             </div>
-                            <div class="col-6"></div>
-                            <div class="col-3 text-center">
-                                <span>test</span>
+                            <div class="col-4"></div>
+                            <div class="col-3 text-end border border-dark align-self-end" style="height: 150px;">
+                                test
                             </div>
                         </div>
                     </div>
-
 
                 </div>
 
