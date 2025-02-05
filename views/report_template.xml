@@ -78,6 +78,18 @@
                         </div>
                     </div> 
 
+                    <div id="custom_signature">
+                        <div class="row border border-dark" style="height: 150px;">
+                            <div class="col-3 text-center">
+                                <span>test</span>
+                            </div>
+                            <div class="col-6"></div>
+                            <div class="col-3 text-center">
+                                <span>test</span>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
 
@@ -127,8 +139,30 @@
                 </div>
 
             </div>
-
         </template>
+
+        <template id="report_saleorder_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//h2" position="replace">
+            <div class="row mt-4">
+                <t> </t>
+                <t> </t>
+                <h3 class="text-center text-decoration-underline fw-bold" style="margin-top: 50px;">
+                    <span t-if="env.context.get('proforma', False) or is_pro_forma">INVOICE</span>
+                    <span t-elif="doc.state in ['draft','sent']">QUOTATION</span>
+                    <span t-else="">ORDER</span>
+                </h3>
+            </div>
+            <div class="mt-0 text-center">
+                <span class="text-center fw-bold " t-field="doc.name">SO0000</span>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[contains(@id,'informations')]" position="replace">
+            <div></div>
+        </xpath>
+
+
+    </template>
 
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
             <xpath expr="//t[@t-elif]" position="before">
@@ -171,7 +205,7 @@
                         div#total table, .totals_taxes_company_currency table {
                             tr {
                                 &amp;.o_total td {
-                                    background-color: background-color: rgba(<t t-esc='primary'/>, 1);
+                                    background-color: rgba(<t t-esc='primary'/>, 1);
                                 }
                             }
                         }
