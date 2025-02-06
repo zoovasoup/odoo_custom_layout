@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <template id="external_layout_custom">
-
             <div class="">
-
                 <!-- Header -->
-                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-                    <div class="o_boxed_header">
-                    <div class="row mb8">
-                        <div class="col-6">
+                <div t-attf-class="mt-5 header o_company_#{company.id}_layout " t-att-style="report_header_style">
+
+                <div class="">
+                    <div class="row mb-5 bg-opacity-50">
+                    <!-- t-att-style="'background-image: url(' + image_data_uri(company.logo) + '); background-size: contain; background-position: right center; background-repeat: no-repeat;'"> -->
+                        <!-- <div class="col-5 position-absolute top-0 end-0 " style="z-index: -1; opacity:0.25">
+                            <img t-if="company.logo"  t-att-src="image_data_uri(company.logo)" alt="Logo" />
+                        </div> -->
+                        
+                        <!-- Header-Logo -->
+                        <div class="col-5">
                             <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
                         </div>
-                        <div class="col-6 text-end mb4">
+
+                        <!-- Header-Information -->
+                        <div class="col-7 text-end mb4" >
+                            
                             <t t-if="company.report_header and company.report_header.strip() != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
                                 <div class="mt0 h4" t-field="company.report_header"/>
                             </t>
@@ -37,8 +44,9 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
+                </div>
+
 
                 <!-- Invoice Address and Invoice Details -->
                 <div 
@@ -61,78 +69,61 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-4">
+                        <!-- Current Date -->
+                        <div class="col-4">
                             <div class="date text-end">
-                                <t t-if="o.date_order">
-                                    <t t-esc="o.date_order.strftime('%d %B %Y')"/>
-                                </t>
+                                <span id="date_header_placement" t-esc="datetime.datetime.now().strftime('%d %B, %Y')"/>
                             </div>
-                        </div> -->
-
+                        </div>
                     </div>
                                         
                     <!-- Document Content -->
-                    <div class="row o_report_layout_boxed">
+                    <div class="row o_report_layout_boxed pt-5">
                         <div class="col">
                             <t t-out="0"/>
                         </div>
                     </div> 
-
-
                 </div>
 
                 <!-- Footer -->
-                <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
-                    <div t-if="report_type == 'pdf'" class="row">
-                        <div class="col text-end page_number">
-                            <div class="text-muted">
-                                Page: <span class="page"/> of <span class="topage"/>
+                <div class="custom_layout_footer" t-attf-class="mt-8 footer container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div class="mt-4 row company_details custom_background" >
+
+                        <div class="col-4" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.phone">
+                                <span class="fa fa-fw fa-phone"></span>
+                                <span t-field="company.phone"></span>
                             </div>
                         </div>
+
+                        <div class="col-4" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.email">
+                                <span class="fa fa-fw fa-envelope-o"></span>
+                                <span t-field="company.email"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-4" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.website">
+                                <span class="fa fa-fw fa-globe"></span>
+                                <span t-field="company.website"></span>
+                            </div>
+                        </div>
+
                     </div>
-
-                    <div class="row">
-                        <div class="col mt-2 " style="height: 10px;">
-                            <div class="o_total" style="width: 100%; border-top: solid 1px;"></div>
-                        </div>
-                    </div>
-
-                    <div class="row company_details custom_background">
-                        <div class="col-4">
-                            <ul class="list-inline">
-                                <li><span t-field="company.name"/></li>
-
-                                <li t-if="company.country_id"><span t-field="company.country_id.name"/></li>
-                            </ul>
-                        </div>
-                        <div class="col-4">
-                            <ul class="list-inline">
-                                <li t-if="company.phone"><span class="fa fa-fw fa-phone"/><span t-field="company.phone"/></li>
-                                <li t-if="company.email"><span class="fa fa-fw fa-envelope-o"/><span t-field="company.email"/></li>
-                                <li t-if="company.website"><span class="fa fa-fw fa-globe"/><span t-field="company.website"/></li>
-
-                            </ul>
-                        </div>
-                        <div class="col-4">
-                            <ul class="list-inline" t-if="company.partner_id.bank_ids">
-                                <t t-foreach="company.partner_id.bank_ids[:2]" t-as="bank">
-                                    <li><span t-field="bank.bank_id.name"/></li>
-                                    <li>IBAN: <span t-field="bank.acc_number"/></li>
-                                    <li>BIC: <span t-field="bank.bank_id.bic"/></li>
-                                </t>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
-
-            </div>
-
+            </div> 
         </template>
 
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
             <xpath expr="//t[@t-elif]" position="before">
                 <t t-elif="layout == 'my_custom.external_layout_custom'">
+                &amp; .custom_layout_footer {
+                    border-top: 2px solid #ddd; /* Add a top border */
+                }
                     &amp;.custom_page {
                         &amp; .custom_background {
                             background-color: <t t-esc="company.primary_color or 'black'"/>;
@@ -171,7 +162,7 @@
                         div#total table, .totals_taxes_company_currency table {
                             tr {
                                 &amp;.o_total td {
-                                    background-color: background-color: rgba(<t t-esc='primary'/>, 1);
+                                    background-color: rgba(<t t-esc='primary'/>, 1);
                                 }
                             }
                         }
