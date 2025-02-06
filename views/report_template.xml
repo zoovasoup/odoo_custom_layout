@@ -58,13 +58,12 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-4">
+                        <!-- Current Date -->
+                        <div class="col-4">
                             <div class="date text-end">
-                                <t t-if="o.date_order">
-                                    <t t-esc="o.date_order.strftime('%d %B %Y')"/>
-                                </t>
+                                <span id="date_header_placement" t-esc="datetime.datetime.now().strftime('%d %B, %Y')"/>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                                         
                     <!-- Document Content -->
@@ -75,58 +74,21 @@
                     </div> 
                 </div>
 
-                <!-- <div id="custom_signature" class="mt-5">
-                        <div class="row fw-bold text-start"><span t-esc="company.name" /></div>
-                        <div class="row h-150">
-                            <div class="col-5 text-start">
-                                <div class="row" style="height: 110px;"></div>
-                                <span class="fw-bold text-decoration-underline" t-esc="company.name"></span><br></br>
-                                <span class="">test</span>
-                            </div>
-                            <div class="col-2"></div>
-                            <div>
-                                <span id="doc_info_contact">Contact Person :</span><br></br>                        
-                                <span t-esc="company.name"></span><br></br>
-                            </div>
-                        </div>
-                 </div> -->
-
                 <!-- Footer -->
-                <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
-
-                    <div class="row">
-                        <div class="col mt-2 " style="height: 10px;">
-                            <div class="o_total" style="width: 100%; border-top: solid 1px;"></div>
-                        </div>
-                    </div>
-
+                <div t-attf-class=" footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
                     <div class="row company_details custom_background">
-                        <div class="col-4">
-                            <ul class="list-inline">
-                                <li><span t-field="company.name"/></li>
-
-                                <li t-if="company.country_id"><span t-field="company.country_id.name"/></li>
-                            </ul>
+                        <div class="col-4 justify-content-center"> 
+                            <div t-if="company.phone"><span class="fa fa-fw fa-phone"/><span t-field="company.phone"/></div>
                         </div>
-                        <div class="col-4">
-                            <ul class="list-inline">
-                                <li t-if="company.phone"><span class="fa fa-fw fa-phone"/><span t-field="company.phone"/></li>
-                                <li t-if="company.email"><span class="fa fa-fw fa-envelope-o"/><span t-field="company.email"/></li>
-                                <li t-if="company.website"><span class="fa fa-fw fa-globe"/><span t-field="company.website"/></li>
 
-                            </ul>
+                        <div class="col-4 justify-content-center"> 
+                            <div t-if="company.email"><span class="fa fa-fw fa-envelope-o"/><span t-field="company.email"/></div>
                         </div>
-                        <div class="col-4">
-                            <ul class="list-inline" t-if="company.partner_id.bank_ids">
-                                <t t-foreach="company.partner_id.bank_ids[:2]" t-as="bank">
-                                    <li><span t-field="bank.bank_id.name"/></li>
-                                    <li>IBAN: <span t-field="bank.acc_number"/></li>
-                                    <li>BIC: <span t-field="bank.bank_id.bic"/></li>
-                                </t>
-                            </ul>
+
+                        <div class="col-4 justify-content-center"> 
+                            <div t-if="company.website"><span class="fa fa-fw fa-globe"/><span t-field="company.website"/></div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
