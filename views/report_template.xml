@@ -4,13 +4,18 @@
         <template id="external_layout_custom">
             <div class="">
                 <!-- Header -->
-                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-                    <div class="o_boxed_header">
-                    <div class="row mb8">
-                        <div class="col-6">
+                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style; min-height: 250px;">
+                <div class="o_boxed_header">
+                    <div class="row mb5">
+                        <!-- Header-Logo -->
+                        <div class="col-5">
                             <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
                         </div>
-                        <div class="col-6 text-end mb4">
+
+                        <!-- Header-Information -->
+                        <div class="col-7 text-end mb4" 
+                            t-att-style="'background-image: url(' + image_data_uri(company.logo) + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
+                            
                             <t t-if="company.report_header and company.report_header.strip() != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
                                 <div class="mt0 h4" t-field="company.report_header"/>
                             </t>
@@ -34,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
                 </div>
 
                 <!-- Invoice Address and Invoice Details -->
@@ -75,28 +80,36 @@
                 </div>
 
                 <!-- Footer -->
-                <div t-attf-class=" footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
-                    <div class="row company_details custom_background">
-                        <div class="col-4 justify-content-center"> 
-                            <div t-if="company.phone"><span class="fa fa-fw fa-phone"/><span t-field="company.phone"/></div>
+                <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div class="row company_details custom_background" >
+
+                        <div class="col-4 border border-black" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.phone">
+                                <span class="fa fa-fw fa-phone"></span>
+                                <span t-field="company.phone"></span>
+                            </div>
                         </div>
 
-                        <div class="col-4 justify-content-center"> 
-                            <div t-if="company.email"><span class="fa fa-fw fa-envelope-o"/><span t-field="company.email"/></div>
+                        <div class="col-4 border border-black" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.email">
+                                <span class="fa fa-fw fa-envelope-o"></span>
+                                <span t-field="company.email"></span>
+                            </div>
                         </div>
 
-                        <div class="col-4 justify-content-center"> 
-                            <div t-if="company.website"><span class="fa fa-fw fa-globe"/><span t-field="company.website"/></div>
+                        <div class="col-4 border border-black" 
+                             t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
+                            <div t-if="company.website">
+                                <span class="fa fa-fw fa-globe"></span>
+                                <span t-field="company.website"></span>
+                            </div>
                         </div>
+
                     </div>
                 </div>
-
-            </div>
-        </template>
-
-        <template id="report_saleorder_inherit" inherit_id="sale.report_saleorder_document">
-            
-            
+            </div> 
         </template>
 
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
