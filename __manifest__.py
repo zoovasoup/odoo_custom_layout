@@ -19,7 +19,6 @@ Long description of module's purpose
     'data': [
         'views/report_template.xml',
         'data/report_layout.xml',
-        'views/report_information.xml',
     ],
 
     'installable': True,

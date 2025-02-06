@@ -75,7 +75,7 @@
                     </div> 
                 </div>
 
-                <div id="custom_signature" class="mt-5">
+                <!-- <div id="custom_signature" class="mt-5">
                         <div class="row fw-bold text-start"><span t-esc="company.name" /></div>
                         <div class="row h-150">
                             <div class="col-5 text-start">
@@ -89,7 +89,7 @@
                                 <span t-esc="company.name"></span><br></br>
                             </div>
                         </div>
-                 </div>
+                 </div> -->
 
                 <!-- Footer -->
                 <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
