@@ -4,17 +4,22 @@
         <template id="external_layout_custom">
             <div class="">
                 <!-- Header -->
-                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style; min-height: 250px;">
-                <div class="o_boxed_header">
-                    <div class="row mb5">
+                <div t-attf-class="mt-5 header o_company_#{company.id}_layout " t-att-style="report_header_style">
+
+                <div class="">
+                    <div class="row mb-5 bg-opacity-50">
+                    <!-- t-att-style="'background-image: url(' + image_data_uri(company.logo) + '); background-size: contain; background-position: right center; background-repeat: no-repeat;'"> -->
+                        <!-- <div class="col-5 position-absolute top-0 end-0 " style="z-index: -1; opacity:0.25">
+                            <img t-if="company.logo"  t-att-src="image_data_uri(company.logo)" alt="Logo" />
+                        </div> -->
+                        
                         <!-- Header-Logo -->
                         <div class="col-5">
                             <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
                         </div>
 
                         <!-- Header-Information -->
-                        <div class="col-7 text-end mb4" 
-                            t-att-style="'background-image: url(' + image_data_uri(company.logo) + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
+                        <div class="col-7 text-end mb4" >
                             
                             <t t-if="company.report_header and company.report_header.strip() != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
                                 <div class="mt0 h4" t-field="company.report_header"/>
@@ -41,6 +46,7 @@
                     </div>
                 </div>
                 </div>
+
 
                 <!-- Invoice Address and Invoice Details -->
                 <div 
@@ -72,7 +78,7 @@
                     </div>
                                         
                     <!-- Document Content -->
-                    <div class="row o_report_layout_boxed">
+                    <div class="row o_report_layout_boxed pt-5">
                         <div class="col">
                             <t t-out="0"/>
                         </div>
@@ -80,10 +86,10 @@
                 </div>
 
                 <!-- Footer -->
-                <div t-attf-class="footer custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
-                    <div class="row company_details custom_background" >
+                <div class="custom_layout_footer" t-attf-class="mt-8 footer container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div class="mt-4 row company_details custom_background" >
 
-                        <div class="col-4 border border-black" 
+                        <div class="col-4" 
                              t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
                             <div t-if="company.phone">
                                 <span class="fa fa-fw fa-phone"></span>
@@ -91,7 +97,7 @@
                             </div>
                         </div>
 
-                        <div class="col-4 border border-black" 
+                        <div class="col-4" 
                              t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
                             <div t-if="company.email">
                                 <span class="fa fa-fw fa-envelope-o"></span>
@@ -99,7 +105,7 @@
                             </div>
                         </div>
 
-                        <div class="col-4 border border-black" 
+                        <div class="col-4" 
                              t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
                             <div t-if="company.website">
                                 <span class="fa fa-fw fa-globe"></span>
@@ -115,6 +121,9 @@
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
             <xpath expr="//t[@t-elif]" position="before">
                 <t t-elif="layout == 'my_custom.external_layout_custom'">
+                &amp; .custom_layout_footer {
+                    border-top: 2px solid #ddd; /* Add a top border */
+                }
                     &amp;.custom_page {
                         &amp; .custom_background {
                             background-color: <t t-esc="company.primary_color or 'black'"/>;
