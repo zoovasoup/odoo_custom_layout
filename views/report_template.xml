@@ -4,10 +4,9 @@
         <template id="external_layout_custom">
             <div class="">
                 <!-- Header -->
-                <div t-attf-class="mt-5 header o_company_#{company.id}_layout " t-att-style="report_header_style">
-
-                <div class="">
-                    <div class="row mb-5 bg-opacity-50">
+                <div t-attf-class="header custom_page container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                <div class="" >
+                    <div class="row mb-5 custom_layout_header">
                     <!-- t-att-style="'background-image: url(' + image_data_uri(company.logo) + '); background-size: contain; background-position: right center; background-repeat: no-repeat;'"> -->
                         <!-- <div class="col-5 position-absolute top-0 end-0 " style="z-index: -1; opacity:0.25">
                             <img t-if="company.logo"  t-att-src="image_data_uri(company.logo)" alt="Logo" />
@@ -24,6 +23,9 @@
                             <t t-if="company.report_header and company.report_header.strip() != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;'">
                                 <div class="mt0 h4" t-field="company.report_header"/>
                             </t>
+                            <h3 class="text-end fw-bold text_color_primary">
+                                <span t-esc="company.name"/>
+                            </h3>
                             <div name="company_address" class="float-end mb4">
                                 <ul class="list-unstyled" name="company_address_list">
                                     <li t-if="company.is_company_details_empty"><span t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'>
@@ -54,9 +56,10 @@
                     t-att-data-oe-model="o and o._name"
                     t-att-data-oe-id="o and o.id"
                     t-att-data-oe-lang="o and o.env.context.get('lang')"
+                    
                 >
 
-                    <div class="row">
+                    <div class="row mt-3 pt-4">
 
                         <!-- Invoice Address -->
                         <div class="col-1">
@@ -86,8 +89,8 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="custom_layout_footer" t-attf-class="mt-8 footer container o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
-                    <div class="mt-4 row company_details custom_background" >
+                <div class="" t-attf-class="mt-8 footer o_company_#{company.id}_layout #{'custom_page_pdf' if report_type == 'pdf' else ''}">
+                    <div class="mt-4 pt-3 pb-3 custom_layout_footer row company_details" >
 
                         <div class="col-4" 
                              t-attf-style="display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; -webkit-box-orient: vertical; text-align: center;"> 
@@ -121,53 +124,60 @@
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
             <xpath expr="//t[@t-elif]" position="before">
                 <t t-elif="layout == 'my_custom.external_layout_custom'">
-                &amp; .custom_layout_footer {
-                    border-top: 2px solid #ddd; /* Add a top border */
+                &amp; .custom_layout_header {
+                    border-bottom: 3px solid <t t-esc="company.primary_color or 'black'"/>;
                 }
+
+                &amp; .text_color_primary {
+                    color: <t t-esc="company.primary_color or 'black'"/>
+                }
+
+                &amp; .custom_layout_footer {
+                    background-color: <t t-esc="company.primary_color or 'black'"/>;
+                    color:white;
+                }
+                
                     &amp;.custom_page {
-                        &amp; .custom_background {
-                            background-color: <t t-esc="company.primary_color or 'black'"/>;
-                        }
-
-                        &amp;.header {
-                            .company_header {
-                                .name_container {
-                                    color: black;
-                                }
+&amp;.o_report_layout_boxed {
+                    #total strong {
+                        color: <t t-esc='primary'/>;
+                    }
+                    .totals_taxes_company_currency strong{
+                        color: <t t-esc='primary'/>;
+                    }
+                    #informations strong {
+                        color: <t t-esc='secondary'/>;
+                    }
+                    h2 span {
+                        color: <t t-esc='primary'/>;
+                    }
+                    table {
+                        thead {
+                            tr th {
+                                color: <t t-esc='secondary'/>;
                             }
                         }
-                        &amp;.invoice_note {
-                            div {
-                                .address {
-                                    > span {
-                                        color: black;
-                                    }
+                        tbody tr td {
+                            &amp;.o_line_section td {
+                                    background-color: rgba(<t t-esc='primary'/>, 0.7);
                                 }
-                            }
-                            h2 {
-                                color: <t t-esc="company.primary_color or 'black'"/>;
-                            }
-                            .page {
-                                [name=invoice_line_table], [name=stock_move_table], .o_main_table {
-                                    th {
-                                        color: <t t-esc="company.secondary_color or 'black'"/>;
-                                    }
+                            &amp;.is-subtotal,
+                                td.o_price_total {
+                                    background-color: rgba(<t t-esc='secondary'/>, 0.1);
                                 }
-                            }
-                        }
-
-                        &amp;.o_report_layout_boxed {
-
-                        .row > div > table,
-                        div#total table, .totals_taxes_company_currency table {
-                            tr {
-                                &amp;.o_total td {
-                                    background-color: rgba(<t t-esc='primary'/>, 1);
-                                }
-                            }
                         }
                     }
+                }
+                .row > div > table,
+                div#total table, .totals_taxes_company_currency table {
+                    tr {
+                        &amp;.o_total td {
+                            background-color: rgba(<t t-esc='primary'/>, 1);
+                        }
                     }
+                }
+                    }
+                    
                 </t>
             </xpath>
         </template>
