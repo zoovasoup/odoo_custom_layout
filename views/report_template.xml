@@ -123,7 +123,7 @@
 
         <template id="layout_custom_css" inherit_id="web.styles_company_report">
             <xpath expr="//t[@t-elif]" position="before">
-                <t t-elif="layout == 'my_custom.external_layout_custom'">
+                <t t-elif="layout == 'lsi_report_custom.external_layout_custom'">
                 &amp; .custom_layout_header {
                     border-bottom: 3px solid <t t-esc="company.primary_color or 'black'"/>;
                 }

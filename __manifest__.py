@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "my_custom",
+    'name': "lsi_report_custom",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
@@ -8,21 +8,22 @@
 Long description of module's purpose
     """,
 
-    'author': "zvasoup",
+    'author': "zoovasoup",
     'website': "https://www.github.com/zoovasoup",
 
     'category': 'Theme',
-    'version': '0.0.1',
+    'version': '0.1.0',
 
     'depends': ['base'],
 
     'data': [
         'views/report_template.xml',
         'data/report_layout.xml',
+        'views/sale_template.xml',
     ],
 
     'installable': True,
     'application' : False,
-    'license': 'AGPL-3',
+    'license': 'GPL-3',
 }
 
