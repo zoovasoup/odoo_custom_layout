@@ -2,10 +2,17 @@
 {
     'name': "lsi_report_custom",
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
+    'summary': "Custom Report for PT. Lab Sistematika Indonesia",
 
     'description': """
-Long description of module's purpose
+        Custom Report for PT. Lab Sitematika Indonesia
+
+        list :
+            - Header 
+            - Footer
+            - Quotation
+            - Invoice
+            - ...
     """,
 
     'author': "zoovasoup",
@@ -19,7 +26,7 @@ Long description of module's purpose
     'data': [
         'views/report_template.xml',
         'data/report_layout.xml',
-        'views/sale_template.xml',
+        # 'views/sale_template.xml',
     ],
 
     'installable': True,
